@@ -35,9 +35,8 @@ public class NetModule {
 
     @Provides
     @Singleton
-    OkHttpClient providesOkHttpClient(Cache cache) {
+    OkHttpClient providesOkHttpClient() {
         return new OkHttpClient.Builder()
-//                .cache(cache)
                 .addInterceptor(chain -> {
                     Request original = chain.request();
                     Request newRequest = original.newBuilder()
