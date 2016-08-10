@@ -5,16 +5,16 @@ package im.r_c.android.blogm.data.model;
  * Created by richard on 8/9/16.
  */
 
-public final class CusomPage {
+public final class CustomPage {
     private String title;
     private String body;
     private String author;
     private String email;
 
-    public CusomPage() {
+    public CustomPage() {
     }
 
-    public CusomPage(String title, String body, String author, String email) {
+    public CustomPage(String title, String body, String author, String email) {
         this.title = title;
         this.body = body;
         this.author = author;
@@ -55,7 +55,7 @@ public final class CusomPage {
 
     @Override
     public String toString() {
-        return "CusomPage{" +
+        return "CustomPage{" +
                 "title='" + title + '\'' +
                 ", body='" + body + '\'' +
                 ", author='" + author + '\'' +
@@ -68,13 +68,13 @@ public final class CusomPage {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CusomPage cusomPage = (CusomPage) o;
+        CustomPage customPage = (CustomPage) o;
 
-        if (title != null ? !title.equals(cusomPage.title) : cusomPage.title != null) return false;
-        if (body != null ? !body.equals(cusomPage.body) : cusomPage.body != null) return false;
-        if (author != null ? !author.equals(cusomPage.author) : cusomPage.author != null)
+        if (title != null ? !title.equals(customPage.title) : customPage.title != null) return false;
+        if (body != null ? !body.equals(customPage.body) : customPage.body != null) return false;
+        if (author != null ? !author.equals(customPage.author) : customPage.author != null)
             return false;
-        return email != null ? email.equals(cusomPage.email) : cusomPage.email == null;
+        return email != null ? email.equals(customPage.email) : customPage.email == null;
 
     }
 

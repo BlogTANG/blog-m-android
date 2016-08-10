@@ -1,5 +1,7 @@
 package im.r_c.android.blogm.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -9,9 +11,13 @@ import java.util.List;
 
 public final class PostList {
     public List<Post> entries;
+    @SerializedName("has_newer")
     public boolean hasNewer;
+    @SerializedName("newer_url")
     public String newerUrl;
+    @SerializedName("has_older")
     public boolean hasOlder;
+    @SerializedName("older_url")
     public String olderUrl;
 
     public PostList() {

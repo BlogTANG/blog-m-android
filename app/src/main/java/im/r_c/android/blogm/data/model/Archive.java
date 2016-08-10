@@ -1,5 +1,7 @@
 package im.r_c.android.blogm.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,9 @@ import java.util.List;
  */
 
 public final class Archive {
+    @SerializedName("archive_name")
     private String name;
+    @SerializedName("archive_type")
     private String type;
     private List<Post> entries;
 
