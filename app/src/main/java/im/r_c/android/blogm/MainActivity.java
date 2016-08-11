@@ -6,29 +6,32 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
-import im.r_c.android.blogm.data.source.RemoteDataSource;
+import im.r_c.android.blogm.data.Repository;
 import im.r_c.android.fusioncache.FusionCache;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * BlogM
+ * Created by richard on 8/9/16.
+ */
 
-    @Inject
-    FusionCache mCache;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        App.getNetComponent().inject(this);
-
-        RemoteDataSource dataSource = new RemoteDataSource("https://stdrc.cc/api");
-        dataSource.getCustomPage("/cv/")
+        Repository repository = new Repository();
+        repository.getPostList("/page/2")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(site -> Log.d("Main", "" + mCache.getString("https://stdrc.cc/api/cv/")));
+                .subscribe(page -> Log.d("Main", "" + page));
     }
+
+    @Inject
+    FusionCache mCache;
 
     @Override
     protected void onDestroy() {

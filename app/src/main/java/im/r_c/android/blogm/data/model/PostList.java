@@ -10,15 +10,15 @@ import java.util.List;
  */
 
 public final class PostList {
-    public List<Post> entries;
+    private List<Post> entries;
     @SerializedName("has_newer")
-    public boolean hasNewer;
+    private boolean hasNewer;
     @SerializedName("newer_url")
-    public String newerUrl;
+    private String newerUrl;
     @SerializedName("has_older")
-    public boolean hasOlder;
+    private boolean hasOlder;
     @SerializedName("older_url")
-    public String olderUrl;
+    private String olderUrl;
 
     public PostList() {
     }

@@ -10,7 +10,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import im.r_c.android.fusioncache.FusionCache;
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
@@ -24,13 +23,6 @@ public class NetModule {
     private static final String TAG = "NetModule";
 
     public NetModule() {
-    }
-
-    @Provides
-    @Singleton
-    Cache providesOkHttpCache(Application application) {
-        int cacheSize = 10 * 1024 * 1024;
-        return new Cache(application.getCacheDir(), cacheSize);
     }
 
     @Provides

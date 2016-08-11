@@ -47,36 +47,27 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public Observable<PostList> getPostList(String relUrl) {
-        return Observable.just(relUrl)
-                .map(relativeUrl -> mBaseUrl + relativeUrl)
-                .map(url -> fetchDataPage(url, PostList.class));
+        return fetchDataPage(relUrl, PostList.class);
     }
 
     @Override
     public Observable<Post> getPost(String relUrl) {
-        return Observable.just(relUrl)
-                .map(relativeUrl -> mBaseUrl + relativeUrl)
-                .map(url -> fetchDataPage(url, Post.class));
+        return fetchDataPage(relUrl, Post.class);
     }
 
     @Override
     public Observable<CustomPage> getCustomPage(String relUrl) {
-        return Observable.just(relUrl)
-                .map(relativeUrl -> mBaseUrl + relativeUrl)
-                .map(url -> fetchDataPage(url, CustomPage.class));
+        return fetchDataPage(relUrl, CustomPage.class);
     }
 
     @Override
     public Observable<Archive> getArchive(String relUrl) {
-        return Observable.just(relUrl)
-                .map(relativeUrl -> mBaseUrl + relativeUrl)
-                .map(url -> fetchDataPage(url, Archive.class));
+        return fetchDataPage(relUrl, Archive.class);
     }
 
     @Override
     public Observable<Site> getSite() {
-        return Observable.just("/")
-                .map(relativeUrl -> mBaseUrl + relativeUrl)
+        return fullUrlObservable("/")
                 .map(url -> {
                     Site site = null;
                     try {
@@ -89,7 +80,7 @@ public class RemoteDataSource implements DataSource {
                             String siteJsonString = jsonObject.getJSONObject("site").toString();
                             Observable.just(siteJsonString)
                                     .subscribeOn(Schedulers.io())
-                                    .forEach(jsonStr -> mCache.getDiskCache().put("site", jsonStr));
+                                    .forEach(jsonStr -> mCache.put("site", jsonStr));
                             site = mGson.fromJson(siteJsonString, Site.class);
                         }
                     } catch (IOException | JSONException e) {
@@ -99,23 +90,32 @@ public class RemoteDataSource implements DataSource {
                 });
     }
 
-    private <T> T fetchDataPage(String url, Class<T> clz) {
-        try {
-            Response response = mHttpClient.newCall(new Request.Builder()
-                    .url(url)
-                    .build())
-                    .execute();
-            JSONObject jsonObject = new JSONObject(response.body().string());
-            if (jsonObject.getBoolean("ok")) {
-                String pageJsonString = jsonObject.getJSONObject("page").toString();
-                Observable.just(pageJsonString)
-                        .subscribeOn(Schedulers.io())
-                        .forEach(jsonStr -> mCache.getDiskCache().put(url, jsonStr));
-                return mGson.fromJson(pageJsonString, clz);
-            }
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private Observable<String> fullUrlObservable(String relUrl) {
+        return Observable.just(relUrl)
+                .map(relativeUrl -> mBaseUrl + relativeUrl);
+    }
+
+    private <T> Observable<T> fetchDataPage(String relUrl, Class<T> clz) {
+        return fullUrlObservable(relUrl)
+                .map(url -> {
+                    T t = null;
+                    try {
+                        Response response = mHttpClient.newCall(new Request.Builder()
+                                .url(url)
+                                .build())
+                                .execute();
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getBoolean("ok")) {
+                            String pageJsonString = jsonObject.getJSONObject("page").toString();
+                            Observable.just(pageJsonString)
+                                    .subscribeOn(Schedulers.io())
+                                    .forEach(jsonStr -> mCache.put(url, jsonStr));
+                            t = mGson.fromJson(pageJsonString, clz);
+                        }
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                    return t;
+                });
     }
 }
