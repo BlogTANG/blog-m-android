@@ -3,7 +3,7 @@ package im.r_c.android.blogm.data.source;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import im.r_c.android.blogm.data.Repository;
+import im.r_c.android.blogm.view.PostListFragment;
 
 /**
  * BlogM
@@ -13,5 +13,5 @@ import im.r_c.android.blogm.data.Repository;
 @Singleton
 @Component(modules = DataSourceModule.class)
 public interface DataSourceComponent {
-    void inject(Repository repository);
+    void inject(PostListFragment postListFragment);
 }

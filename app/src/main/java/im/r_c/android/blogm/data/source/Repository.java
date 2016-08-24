@@ -1,16 +1,10 @@
-package im.r_c.android.blogm.data;
+package im.r_c.android.blogm.data.source;
 
-import javax.inject.Inject;
-
-import im.r_c.android.blogm.App;
 import im.r_c.android.blogm.data.model.Archive;
 import im.r_c.android.blogm.data.model.CustomPage;
 import im.r_c.android.blogm.data.model.Post;
 import im.r_c.android.blogm.data.model.PostList;
 import im.r_c.android.blogm.data.model.Site;
-import im.r_c.android.blogm.data.source.DataSource;
-import im.r_c.android.blogm.data.source.LocalDataSource;
-import im.r_c.android.blogm.data.source.RemoteDataSource;
 import rx.Observable;
 
 /**
@@ -20,14 +14,12 @@ import rx.Observable;
 
 public class Repository implements DataSource {
 
-    @Inject
-    LocalDataSource mLocalDataSource;
+    private LocalDataSource mLocalDataSource;
+    private RemoteDataSource mRemoteDataSource;
 
-    @Inject
-    RemoteDataSource mRemoteDataSource;
-
-    public Repository() {
-        App.getDataSourceComponent().inject(this);
+    public Repository(LocalDataSource localDataSource, RemoteDataSource remoteDataSource) {
+        mLocalDataSource = localDataSource;
+        mRemoteDataSource = remoteDataSource;
     }
 
     @Override

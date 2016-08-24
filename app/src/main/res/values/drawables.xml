@@ -1,0 +1,3 @@
+<resources>
+    <item name="ic_menu_post_list" type="drawable">@drawable/ic_view_list_white_48dp</item>
+</resources>

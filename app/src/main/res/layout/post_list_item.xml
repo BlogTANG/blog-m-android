@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="post"
+            type="im.r_c.android.blogm.data.model.Post"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="14dp">
+
+        <TextView
+            android:id="@+id/tv_post_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@{post.title}"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="18sp"
+            tools:text="Post Title"/>
+
+        <TextView
+            android:id="@+id/tv_post_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text='@{post.displayDate}'
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_title"
+            tools:text="2016-3-2"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text='@{post.displayUpdated}'
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_post_date"
+            app:layout_constraintLeft_toRightOf="@id/tv_post_date"
+            tools:text="2016-3-4"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>

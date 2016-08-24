@@ -42,7 +42,7 @@ public class RemoteDataSource implements DataSource {
 
     public RemoteDataSource(String baseUrl) {
         mBaseUrl = baseUrl;
-        App.getNetComponent().inject(this);
+        App.getToolComponent().inject(this);
     }
 
     @Override

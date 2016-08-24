@@ -1,6 +1,10 @@
 package im.r_c.android.blogm.data.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * BlogM
@@ -14,13 +18,16 @@ public final class Post {
     private List<String> categories;
     private List<String> tags;
     private String author;
-    private String date;
+    private Date date;
+    private Date updated;
     private String email;
+
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-M-d", Locale.ENGLISH);
 
     public Post() {
     }
 
-    public Post(String title, String url, String body, List<String> categories, List<String> tags, String author, String date, String email) {
+    public Post(String title, String url, String body, List<String> categories, List<String> tags, String author, Date date, Date updated, String email) {
         this.title = title;
         this.url = url;
         this.body = body;
@@ -28,6 +35,7 @@ public final class Post {
         this.tags = tags;
         this.author = author;
         this.date = date;
+        this.updated = updated;
         this.email = email;
     }
 
@@ -79,12 +87,28 @@ public final class Post {
         this.author = author;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getDisplayDate() {
+        return date != null ? dateFormat.format(date) : "";
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public String getDisplayUpdated() {
+        return updated != null ? dateFormat.format(updated) : "";
     }
 
     public String getEmail() {
@@ -105,6 +129,7 @@ public final class Post {
                 ", tags=" + tags +
                 ", author='" + author + '\'' +
                 ", date='" + date + '\'' +
+                ", updated='" + updated + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
@@ -124,6 +149,7 @@ public final class Post {
         if (tags != null ? !tags.equals(post.tags) : post.tags != null) return false;
         if (author != null ? !author.equals(post.author) : post.author != null) return false;
         if (date != null ? !date.equals(post.date) : post.date != null) return false;
+        if (updated != null ? !updated.equals(post.updated) : post.updated != null) return false;
         return email != null ? email.equals(post.email) : post.email == null;
 
     }
@@ -137,6 +163,7 @@ public final class Post {
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
         result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (updated != null ? updated.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }

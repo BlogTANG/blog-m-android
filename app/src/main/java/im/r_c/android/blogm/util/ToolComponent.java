@@ -1,8 +1,10 @@
-package im.r_c.android.blogm;
+package im.r_c.android.blogm.util;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
+import im.r_c.android.blogm.AppModule;
+import im.r_c.android.blogm.view.MainActivity;
 import im.r_c.android.blogm.data.source.LocalDataSource;
 import im.r_c.android.blogm.data.source.RemoteDataSource;
 
@@ -12,8 +14,8 @@ import im.r_c.android.blogm.data.source.RemoteDataSource;
  */
 
 @Singleton
-@Component(modules = {AppModule.class, NetModule.class})
-public interface NetComponent {
+@Component(modules = {AppModule.class, ToolModule.class})
+public interface ToolComponent {
     void inject(RemoteDataSource remoteDataSource);
     void inject(LocalDataSource localDataSource);
     void inject(MainActivity mainActivity);

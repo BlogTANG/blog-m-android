@@ -30,7 +30,7 @@ public class LocalDataSource implements DataSource {
 
     public LocalDataSource(String baseUrl) {
         mBaseUrl = baseUrl;
-        App.getNetComponent().inject(this);
+        App.getToolComponent().inject(this);
     }
 
     @Override

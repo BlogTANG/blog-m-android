@@ -1,9 +1,16 @@
-package im.r_c.android.blogm;
+package im.r_c.android.blogm.util;
 
 import android.app.Application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.inject.Singleton;
 
@@ -19,10 +26,9 @@ import okhttp3.Request;
  */
 
 @Module
-public class NetModule {
-    private static final String TAG = "NetModule";
+public class ToolModule {
 
-    public NetModule() {
+    public ToolModule() {
     }
 
     @Provides
@@ -42,7 +48,18 @@ public class NetModule {
     @Provides
     @Singleton
     Gson providesGson() {
-        return new GsonBuilder().create();
+        return new GsonBuilder()
+                .registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context) -> {
+                    DateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
+                    Date date = null;
+                    try {
+                        date = format.parse(json.getAsString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return date;
+                })
+                .create();
     }
 
     @Provides

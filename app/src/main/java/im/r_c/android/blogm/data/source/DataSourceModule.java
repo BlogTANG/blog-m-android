@@ -4,8 +4,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import im.r_c.android.blogm.data.source.LocalDataSource;
-import im.r_c.android.blogm.data.source.RemoteDataSource;
 
 /**
  * BlogM
@@ -31,5 +29,11 @@ public class DataSourceModule {
     @Singleton
     RemoteDataSource providesRemoteDataSource() {
         return new RemoteDataSource(mBaseUrl);
+    }
+
+    @Provides
+    @Singleton
+    Repository providesRepository(LocalDataSource localDataSource, RemoteDataSource remoteDataSource) {
+        return new Repository(localDataSource, remoteDataSource);
     }
 }

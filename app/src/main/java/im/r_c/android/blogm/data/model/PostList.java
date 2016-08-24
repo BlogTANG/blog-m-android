@@ -39,7 +39,7 @@ public final class PostList {
         this.entries = entries;
     }
 
-    public boolean isHasNewer() {
+    public boolean hasNewer() {
         return hasNewer;
     }
 
@@ -55,7 +55,7 @@ public final class PostList {
         this.newerUrl = newerUrl;
     }
 
-    public boolean isHasOlder() {
+    public boolean hasOlder() {
         return hasOlder;
     }
 

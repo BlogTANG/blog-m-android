@@ -2,8 +2,12 @@ package im.r_c.android.blogm;
 
 import android.app.Application;
 
+import im.r_c.android.blogm.data.source.DaggerDataSourceComponent;
 import im.r_c.android.blogm.data.source.DataSourceComponent;
 import im.r_c.android.blogm.data.source.DataSourceModule;
+import im.r_c.android.blogm.util.DaggerToolComponent;
+import im.r_c.android.blogm.util.ToolComponent;
+import im.r_c.android.blogm.util.ToolModule;
 
 /**
  * BlogM
@@ -12,11 +16,11 @@ import im.r_c.android.blogm.data.source.DataSourceModule;
 
 public class App extends Application {
 
-    private static NetComponent sNetComponent;
+    private static ToolComponent sToolComponent;
     private static DataSourceComponent sDataSourceComponent;
 
-    public static NetComponent getNetComponent() {
-        return sNetComponent;
+    public static ToolComponent getToolComponent() {
+        return sToolComponent;
     }
 
     public static DataSourceComponent getDataSourceComponent() {
@@ -27,13 +31,13 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        sNetComponent = DaggerNetComponent.builder()
+        sToolComponent = DaggerToolComponent.builder()
                 .appModule(new AppModule(this))
-                .netModule(new NetModule())
+                .toolModule(new ToolModule())
                 .build();
 
         sDataSourceComponent = DaggerDataSourceComponent.builder()
-                .dataSourceModule(new DataSourceModule("https://stdrc.cc/api"))
+                .dataSourceModule(new DataSourceModule(getString(R.string.base_url)))
                 .build();
     }
 }
