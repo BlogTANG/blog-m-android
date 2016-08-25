@@ -3,7 +3,7 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "24.0.1"
     defaultConfig {
         applicationId "im.r_c.android.blogm"
@@ -13,16 +13,19 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     dataBinding.enabled = true
 }
 
@@ -32,13 +35,13 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile "com.android.support:appcompat-v7:$support_version"
-    compile "com.android.support:design:$support_version"
-    compile "com.android.support:support-v4:$support_version"
-    compile "com.android.support:customtabs:$support_version"
+    compile "com.android.support:appcompat-v7:$support_version",
+            "com.android.support:design:$support_version",
+            "com.android.support:support-v4:$support_version",
+            "com.android.support:customtabs:$support_version"
 
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'io.reactivex:rxjava:1.0.14',
+            'io.reactivex:rxandroid:1.0.1'
 
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.google.dagger:dagger:2.5'
@@ -59,9 +62,4 @@ buildscript {
     dependencies {
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
     }
-}
-
-// Required because retrolambda is on maven central
-repositories {
-    mavenCentral()
 }
